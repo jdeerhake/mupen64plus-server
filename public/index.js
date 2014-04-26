@@ -8,7 +8,7 @@ var tmpl = {
   argBinary : Handlebars.compile( $( '#tmpl_arg_binary' ).html() )
 };
 
-var socket = io.connect( 'http://localhost:8080' );
+var socket = io.connect( '' );
 
 socket.on( 'game:list', function( gms ) {
   var games = gms.map(function( gm ) { return new Game( gm ); });
