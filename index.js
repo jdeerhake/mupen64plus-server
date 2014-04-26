@@ -39,6 +39,11 @@ function routes( socket ) {
     _.extend( mupen.opts, opts );
     io.sockets.emit( 'mupen:opts', mupen.opts );
   });
+
+  socket.on( 'game:end', function() {
+    mupen.end();
+    io.sockets.emit( 'game:end' );
+  });
 }
 
 function setBindings( process ) {

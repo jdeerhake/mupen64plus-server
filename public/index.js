@@ -68,3 +68,7 @@ $( '#opts_toggle' ).click(function() {
 $( '#console_toggle' ).click(function() {
   $( '#console' ).toggle();
 });
+
+$( '#end_game' ).click(function() {
+  socket.emit( 'game:end' );
+});
