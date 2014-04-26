@@ -6,6 +6,7 @@ var _ = require( 'lodash' );
 var execOpts = {
   cwd : conf.mupenDir,
   env : {
+    HOME : conf.mupenDir,
     DISPLAY : ':0'
   }
 };
