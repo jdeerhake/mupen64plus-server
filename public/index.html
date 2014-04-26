@@ -21,6 +21,9 @@
       {{# boxart }}
         <img src='{{ url }}'>
       {{/ boxart }}
+      {{^ boxart }}
+        <h3>{{ name }}</h3>
+      {{/ boxart }}
       <dl class='info'>
         <dt>Game</dt>
         <dd>{{ name }}</dd>
@@ -34,14 +37,26 @@
 
   <script type='text/template' id='tmpl_arg_binary'>
     <li class='option' id='{{ name }}'>
-      <label>{{ name }}</label>
+      <label>{{ titlize name }}</label>
       <input type='checkbox' {{# val }}checked{{/ val }}>
+    </li>
+  </script>
+
+  <script type='text/template' id='tmpl_arg_select'>
+    <li class='option with_select' id='{{ name }}'>
+      <label>{{ titlize name }}</label>
+      <select>
+          <option value=''></option>
+        {{# vals }}
+          <option value='{{ . }}'>{{ scrubLibName . }}</option>
+        {{/ vals }}
+      </select>
     </li>
   </script>
 
   <script type='text/template' id='tmpl_arg'>
     <li class='option' id='{{ name }}'>
-      <label>{{ name }}</label>
+      <label>{{ titlize name }}</label>
       <input type='text' value='{{ val }}'>
     </li>
   </script>

@@ -26,10 +26,12 @@ Mupen64Plus.prototype = {
     this.process.kill();
   },
   args : function( file ) {
-    return _.reduce( this.opts, function( res, val, name ) {
-      var withVal = val === true ? '' : ' '  + val;
-      if( val ) {
-        res.push( '--' + name + withVal );
+    return _.reduce( this.opts, function( res, conf, name ) {
+      if( !conf.val ) { return res; }
+      res.push( '--'  + name );
+
+      if( conf.type === 'val' ) {
+        res.push( conf.val );
       }
       return res;
     }, [] ).concat( file );

@@ -12,7 +12,7 @@ var server = require( './lib/server' );
 var io = require( 'socket.io' ).listen( server );
 
 
-var mupen = new Mupen64Plus( require( './mupen_defaults' ) );
+var mupen = new Mupen64Plus( require( './src/mupen64plus_options' ) );
 
 function routes( socket ) {
   socket.emit( 'connection', 'connected' );
@@ -36,8 +36,11 @@ function routes( socket ) {
   });
 
   socket.on( 'mupen:opts', function( opts ) {
-    _.extend( mupen.opts, opts );
-    io.sockets.emit( 'mupen:opts', mupen.opts );
+    Object.keys( opts ).map(function( key ) {
+      var val = opts[ key ];
+      mupen.opts[ key ].val = val;
+      io.sockets.emit( 'mupen:opts', mupen.opts );
+    });
   });
 
   socket.on( 'game:end', function() {
