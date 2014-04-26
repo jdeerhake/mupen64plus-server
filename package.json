@@ -1,0 +1,26 @@
+{
+  "name": "mupen64plus-server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Deerhake <jdeerhake@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "promise": "~4.0.0",
+    "socket.io": "~0.9.16",
+    "node-static": "~0.7.3",
+    "findit": "~1.1.1",
+    "lodash": "~2.4.1",
+    "xml2js": "~0.4.2",
+    "request": "~2.34.0",
+    "handlebars": "~2.0.0-alpha.2",
+    "gulp": "~3.6.2",
+    "gulp-browserify": "~0.5.0",
+    "gulp-plumber": "~0.6.1",
+    "jquery": "~2.1.0",
+    "gulp-sass": "~0.7.1"
+  }
+}
