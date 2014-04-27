@@ -5,21 +5,21 @@ var gulp = require( 'gulp' ),
 
 
 var paths = {
-    scripts : 'client/*.js',
-    styles : 'scss/*.scss',
-    output : 'public/compiled'
+  scripts : 'client/*.js',
+  styles : 'scss/*.scss',
+  output : 'public/compiled'
 };
 
 var bfyConf = {
   source : paths.scripts,
-  transform: 'hbsfy'
+  transform: [ 'hbsfy' ]
 };
 
 gulp.task( 'scripts', function() {
-    gulp.src( paths.scripts )
-        .pipe( plumber() )
-        .pipe( browserify( bfyConf ) )
-        .pipe( gulp.dest( paths.output ) );
+  gulp.src( paths.scripts )
+      .pipe( plumber() )
+      .pipe( browserify( bfyConf ) )
+      .pipe( gulp.dest( paths.output ) );
 });
 
 gulp.task( 'sass', function () {
@@ -30,8 +30,8 @@ gulp.task( 'sass', function () {
 });
 
 gulp.task( 'watch', function() {
-    gulp.watch( [ paths.scripts, 'lib/*.js', 'src/*.js' ], [ 'scripts' ]);
-    gulp.watch( paths.styles, [ 'sass' ]);
+  gulp.watch( [ paths.scripts, 'lib/*.js', 'src/*.js' ], [ 'scripts' ]);
+  gulp.watch( paths.styles, [ 'sass' ]);
 });
 
 gulp.task( 'compile', [ 'scripts', 'sass' ]);

@@ -1,15 +1,29 @@
 #action_bar {
+  $item-height: $action-bar-height - ( $gutter * 2 );
+  $font-size: 16px;
+  $line-height: $font-size * 1.2;
+  $item-padding: ( $item-height - $line-height ) / 2;
+
   z-index: 1000;
   position: fixed;
   padding: $gutter;
-  height: $action-bar-height;
+  min-height: $action-bar-height;
   top: 0;
   background: $bg-light-transparent;
   width: 100%;
 
+  button, #status {
+    font-size: $font-size;
+    line-height: $line-height;
+    padding-top: $item-padding;
+    padding-bottom: $item-padding;
+  }
+
   button {
-    padding: 3px 10px;
     margin: 0 5px;
+    float: left;
+    padding-left: $item-padding * 2;
+    padding-right: $item-padding * 2;
 
     &:first-child {
       margin-left: 0;
@@ -19,18 +33,17 @@
       margin-right: 0;
     }
   }
-}
 
+  #status {
+    margin-left: $gutter;
+    color: $text-dark;
+    font-style: italic;
+    float: left;
+    min-width: 300px;
 
-#status {
-  //line-height: $action-bar-height;
-  margin-left: $gutter;
-  color: $text-dark;
-  font-style: italic;
-  display: inline-block;
-
-  em {
-    font-weight: bold;
-    font-style: normal;
+    em {
+      font-weight: bold;
+      font-style: normal;
+    }
   }
 }

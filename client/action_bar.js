@@ -28,5 +28,4 @@ module.exports = function( socket ) {
   $( '#end_game' ).click(function() {
     socket.emit( 'game:end' );
   });
-
 };
