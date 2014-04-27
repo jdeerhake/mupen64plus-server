@@ -1,5 +1,11 @@
 var $ = require( 'jquery' );
 var Game = require( '../src/game' );
+var hbs = require( 'handlebars' );
+
+var tmpl = {
+  gameStatus : hbs.compile( '<em>Now playing:</em> <span title="{{ file.name }}">{{ name }}</span>' ),
+  noGame : hbs.compile( '<em>No game loaded</em>' )
+};
 
 $( '#opts_toggle' ).click(function() {
   $( '#options' ).toggle();
@@ -12,11 +18,11 @@ $( '#console_toggle' ).click(function() {
 module.exports = function( socket ) {
   socket.on( 'game:load', function( gm ) {
     var game = new Game( gm );
-    $( '#status' ).html( '<em>Now playing:</em> ' + game.name() + ' (' + game.file.name + ')' );
+    $( '#status' ).html( tmpl.gameStatus( game ) );
   });
 
   socket.on( 'game:end', function() {
-    $( '#status' ).html( '<em>No game loaded</em>' );
+    $( '#status' ).html( tmpl.noGame() );
   });
 
   $( '#end_game' ).click(function() {

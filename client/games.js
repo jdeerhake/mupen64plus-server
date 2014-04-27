@@ -10,6 +10,7 @@ var tmpl = {
 
 
 function showGames( games ) {
+  console.log( 'reload list' );
   var container = $( '#games' ).html( games.map( tmpl.game ) );
   imagesLoaded( 'img', function() {
     new Masonry( container[0], { itemSelector : '.game' });
@@ -19,7 +20,9 @@ function showGames( games ) {
 module.exports = function( socket ) {
 
   socket.on( 'game:list', function( gms ) {
-    var games = gms.map(function( gm ) { return new Game( gm ); });
+    var games = gms
+                  .map(function( gm ) { return new Game( gm ); })
+                  .sort(function( a, b ) { return a.name() > b.name() ? 1 : -1; });
     showGames( games );
   });
 

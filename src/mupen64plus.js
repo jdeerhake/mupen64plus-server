@@ -1,7 +1,9 @@
 var conf = require( '../config' );
 var spawn = require( 'child_process' ).spawn;
-var path = require( 'path' );
 var _ = require( 'lodash' );
+var events = require( 'events' );
+
+var CMD = './mupen64plus';
 
 var execOpts = {
   cwd : conf.mupenDir,
@@ -12,21 +14,32 @@ var execOpts = {
 };
 
 function Mupen64Plus( config ) {
-  this.opts = config;
-}
+  var cnsl = new events.EventEmitter();
+  var process = false;
+  var loadedGame = false;
 
-Mupen64Plus.prototype = {
-  load : function( game ) {
-    if( this.process ) { this.end(); }
-    var args = this.args( game.file.location );
-    this.process = spawn( './mupen64plus', this.args( game.file.location ), execOpts );
-    return this.process;
-  },
-  end : function() {
-    this.process.kill();
-  },
-  args : function( file ) {
-    return _.reduce( this.opts, function( res, conf, name ) {
+  function logCmd( args ) {
+    var cmd = CMD + ' ' + args.join( ' ' );
+    cnsl.emit( 'output', '$ ' + cmd + '\n' );
+  }
+
+  function subscribeToProcess() {
+    process.on( 'exit', function( code ) {
+      loadedGame = false;
+      cnsl.emit( 'exit', code );
+    });
+
+    process.stdout.on( 'data', function( data ) {
+      cnsl.emit( 'output', '' + data );
+    });
+
+    process.stderr.on( 'data', function( data ) {
+      cnsl.emit( 'output', '' + data );
+    });
+  }
+
+  function args( file ) {
+    return _.reduce( config, function( res, conf, name ) {
       if( !conf.val ) { return res; }
       res.push( '--'  + name );
 
@@ -36,6 +49,28 @@ Mupen64Plus.prototype = {
       return res;
     }, [] ).concat( file );
   }
-};
+
+  function load( game ) {
+    if( loadedGame ) { end(); }
+    loadedGame = game;
+    var arg = args( game.file.location );
+    process = spawn( CMD, arg, execOpts );
+    subscribeToProcess();
+    logCmd( arg );
+  }
+
+  function end() {
+    process.kill();
+  }
+
+
+  return {
+    opts : config,
+    load : load,
+    end : end,
+    loadedGame : loadedGame,
+    console : cnsl
+  };
+}
 
 module.exports = Mupen64Plus;

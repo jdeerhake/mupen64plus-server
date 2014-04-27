@@ -3,6 +3,8 @@ var _ = require( 'lodash' );
 
 function Game( conf ) {
   _.merge( this, conf );
+  // shorthand for plucking
+  this.fileLocation = this.file.location;
   this.id = _.uniqueId( 'game_' );
 }
 

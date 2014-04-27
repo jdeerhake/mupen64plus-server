@@ -1,5 +1,4 @@
 var config = require( './config' );
-var _ = require( 'lodash' );
 var Mupen64Plus = require( './src/mupen64plus' );
 var GameList = require( './src/game_list' );
 var GameFinder = require( './src/game_finder' );
@@ -10,9 +9,17 @@ var finder = new GameFinder( config.gamesDir );
 var mupen64plus = new Mupen64Plus( require( './src/mupen64plus_options' ) );
 
 
-finder.on( 'game:found', function( game ) {
-  console.log( 'Added game to the index: ' + game.name() );
+finder.on( 'add', function( game ) {
   games.add( game );
+  console.log( 'Added game to the index: ' + game.name() );
+  io.sockets.emit( 'game:list', games.all() );
+});
+
+finder.on( 'remove', function( file ) {
+  var game = games.findByFile( file );
+  games.remove( game );
+  console.log( 'Removed game from index: ' + game.name() );
+  io.sockets.emit( 'game:list', games.all() );
 });
 
 
@@ -22,10 +29,14 @@ var io = require( 'socket.io' ).listen( server );
 
 io.sockets.on( 'connection', handlers );
 
+
 function handlers( socket ) {
-  socket.emit( 'connection', 'connected' );
+  socket.emit( 'connection:established' );
   socket.emit( 'game:list', games.all() );
   socket.emit( 'mupen64plus:opts', mupen64plus.opts );
+  if( mupen64plus.loadedGame ) {
+    socket.emit( 'game:load', mupen64plus.loadedGame );
+  }
 
   socket.on( 'game:list', function() {
     socket.emit( 'game:list', games.all() );
@@ -38,9 +49,8 @@ function handlers( socket ) {
       return;
     }
 
-    var process = mupen64plus.load( game );
+    mupen64plus.load( game );
     io.sockets.emit( 'game:load', game );
-    setProcessBindings( process );
   });
 
   socket.on( 'mupen64plus:opts', function( opts ) {
@@ -53,16 +63,14 @@ function handlers( socket ) {
 
   socket.on( 'game:end', function() {
     mupen64plus.end();
-    io.sockets.emit( 'game:end' );
   });
 }
 
-function setProcessBindings( process ) {
-  process.stdout.on( 'data', function( data ) {
-    io.sockets.emit( 'console:output', '' + data );
-  });
+mupen64plus.console.on( 'output', function( data ) {
+  io.sockets.emit( 'console:output', data );
+});
 
-  process.stderr.on( 'data', function( data ) {
-    io.sockets.emit( 'console:output', '' + data );
-  });
-}
+mupen64plus.console.on( 'exit', function( code ) {
+  io.sockets.emit( 'console:output', 'process exited with status code ' + code );
+  io.sockets.emit( 'game:end' );
+});
