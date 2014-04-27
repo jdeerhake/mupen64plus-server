@@ -70,7 +70,7 @@ mupen64plus.console.on( 'output', function( data ) {
   io.sockets.emit( 'console:output', data );
 });
 
-mupen64plus.console.on( 'exit', function( code ) {
-  io.sockets.emit( 'console:output', 'process exited with status code ' + code );
+mupen64plus.console.on( 'exit', function( status ) {
+  io.sockets.emit( 'console:output', 'process exited with ' + status );
   io.sockets.emit( 'game:end' );
 });

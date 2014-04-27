@@ -24,9 +24,9 @@ function Mupen64Plus( config ) {
   }
 
   function subscribeToProcess() {
-    process.on( 'exit', function( code ) {
+    process.on( 'exit', function( code, sig ) {
       loadedGame = false;
-      cnsl.emit( 'exit', code );
+      cnsl.emit( 'exit', 'code: ' + code + ' sig: ' + sig );
     });
 
     process.stdout.on( 'data', function( data ) {
