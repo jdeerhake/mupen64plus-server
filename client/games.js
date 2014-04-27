@@ -1,3 +1,4 @@
+/*global imagesLoaded, Masonry*/
 var $ = require( 'jquery' );
 var Game = require( '../src/game' );
 
@@ -26,8 +27,5 @@ module.exports = function( socket ) {
     socket.emit( 'game:load', $( this ).attr( 'id' ) );
   });
 
-  $( '#end_game' ).click(function() {
-    socket.emit( 'game:end' );
-  });
 
 };

@@ -48,7 +48,7 @@
   "plusplus" : false,
 
   // Quote marks to use
-  "quotmark" : "double",
+  "quotmark" : "single",
 
   // Don't use . in regex
   "regexp" : false,

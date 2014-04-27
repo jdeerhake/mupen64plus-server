@@ -8,8 +8,4 @@ module.exports = function( socket ) {
   socket.on( 'game:load', function() {
     $( '#console' ).html( '' );
   });
-
-  $( '#console_toggle' ).click(function() {
-    $( '#console' ).toggle();
-  });
 };

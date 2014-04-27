@@ -20,3 +20,17 @@
     }
   }
 }
+
+
+#status {
+  //line-height: $action-bar-height;
+  margin-left: $gutter;
+  color: $text-dark;
+  font-style: italic;
+  display: inline-block;
+
+  em {
+    font-weight: bold;
+    font-style: normal;
+  }
+}

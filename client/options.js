@@ -12,7 +12,7 @@ var tmpl = {
 
 function createOptions( opts ) {
   var optionsContainer = $( '#options' ).html( '' );
-  _.reduce( opts, function( a, conf, name ) {
+  _.reduce( opts, function( a, conf ) {
     if( conf.hidden ) { return;
     }
     if( conf.type === 'switch' ) {
@@ -28,11 +28,6 @@ function createOptions( opts ) {
     }
   });
 }
-
-
-$( '#opts_toggle' ).click(function() {
-  $( '#options' ).toggle();
-});
 
 
 module.exports = function( socket ) {
