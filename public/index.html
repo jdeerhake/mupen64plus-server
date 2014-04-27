@@ -5,65 +5,19 @@
   <link rel='stylesheet' href='/compiled/style.css'>
 </head>
 <body>
-  <div id='toggles'>
+  <div id='action_bar'>
     <button id='opts_toggle'>Options</button>
     <button id='console_toggle'>Console</button>
-    <button id='end_game'>End game</button>
+    <button id='end_game'>Turn off</button>
   </div>
-  <ul id='options'>
-  </ul>
 
+  <ul id='options'></ul>
   <ul id='games'></ul>
   <pre id='console'></pre>
 
-  <script type='text/template' id='tmpl_game'>
-    <li class='game' id='{{ id }}'>
-      {{# boxart }}
-        <img src='{{ url }}'>
-      {{/ boxart }}
-      {{^ boxart }}
-        <h3>{{ name }}</h3>
-      {{/ boxart }}
-      <dl class='info'>
-        <dt>Game</dt>
-        <dd>{{ name }}</dd>
-        {{# info }}
-          <dt>{{ key }}</dt>
-          <dd>{{ val }}</dd>
-        {{/ info }}
-      </dl>
-    </li>
-  </script>
-
-  <script type='text/template' id='tmpl_arg_binary'>
-    <li class='option' id='{{ name }}'>
-      <label>{{ titlize name }}</label>
-      <input type='checkbox' {{# val }}checked{{/ val }}>
-    </li>
-  </script>
-
-  <script type='text/template' id='tmpl_arg_select'>
-    <li class='option with_select' id='{{ name }}'>
-      <label>{{ titlize name }}</label>
-      <select>
-          <option value=''></option>
-        {{# vals }}
-          <option value='{{ . }}'>{{ scrubLibName . }}</option>
-        {{/ vals }}
-      </select>
-    </li>
-  </script>
-
-  <script type='text/template' id='tmpl_arg'>
-    <li class='option' id='{{ name }}'>
-      <label>{{ titlize name }}</label>
-      <input type='text' value='{{ val }}'>
-    </li>
-  </script>
-
   <script src='/socket.io/socket.io.js'></script>
-  <script src='/imagesloaded.pkgd.min.js'></script>
-  <script src='/masonry.pkgd.min.js'></script>
+  <script src='/vendor/imagesloaded.pkgd.min.js'></script>
+  <script src='/vendor/masonry.pkgd.min.js'></script>
   <script src='/compiled/index.js'></script>
 </body>
 </html>

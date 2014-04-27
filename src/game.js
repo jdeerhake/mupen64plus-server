@@ -16,8 +16,10 @@ Game.prototype = {
     var keys = [ 'Genre', 'Rating', 'ESRB', 'Developer' ];
     return keys.map((function( key ) {
       var func = key.toLowerCase();
-      return { key : key, val : this[ func ]() };
-    }).bind( this ));
+      var val = this[ func ]();
+      if( !val ) { return false; }
+      return { key : key, val : val };
+    }).bind( this )).filter( Boolean );
   },
   genre : function() {
     return [].concat( this.gamesDB.Genres.genre ).join( ', ' );

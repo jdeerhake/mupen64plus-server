@@ -16,3 +16,4 @@ node_modules
 
 .sass-cache
 public/compiled
+config.js

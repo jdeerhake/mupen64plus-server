@@ -1,0 +1,22 @@
+#action_bar {
+  z-index: 1000;
+  position: fixed;
+  padding: $gutter;
+  height: $action-bar-height;
+  top: 0;
+  background: $bg-light-transparent;
+  width: 100%;
+
+  button {
+    padding: 3px 10px;
+    margin: 0 5px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

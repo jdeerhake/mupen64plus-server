@@ -1,0 +1,23 @@
+// backgrounds
+$bg-light-transparent: rgba(255,255,255,0.90);
+$bg-dark-transparent:   rgba(0,0,0,0.90);
+$bg-light: #ddd;
+$bg-dark : #333;
+
+// text
+$text-dark: #333;
+$text-light: #ddd;
+$text-console: lime;
+
+
+// sizing
+$action-bar-height: 40px;
+$gutter: 5px;
+
+@import 'base';
+
+// components
+@import 'action_bar';
+@import 'console';
+@import 'games';
+@import 'options';

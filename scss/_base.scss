@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+}
+
+body {
+  padding-top: $action-bar-height + $gutter;
+  font-family: sans-serif;
+  background: $bg-dark;
+  color: $text-light;
+}
+
+dl, ul {
+  margin: 0;
+  padding: 0;
+}

@@ -3,13 +3,16 @@ var gulp = require( 'gulp' ),
   browserify = require( 'gulp-browserify' ),
   sass = require('gulp-sass');
 
-var bfyConf = {
-  source : 'public/index.js'
-};
 
 var paths = {
-    scripts : [ 'public/index.js' ],
+    scripts : 'client/*.js',
+    styles : 'scss/*.scss',
     output : 'public/compiled'
+};
+
+var bfyConf = {
+  source : paths.scripts,
+  transform: 'hbsfy'
 };
 
 gulp.task( 'scripts', function() {
@@ -20,14 +23,15 @@ gulp.task( 'scripts', function() {
 });
 
 gulp.task( 'sass', function () {
-  gulp.src( './public/*.scss' )
+  gulp.src( paths.styles )
+    .pipe( plumber() )
     .pipe( sass() )
     .pipe( gulp.dest( paths.output ) );
 });
 
 gulp.task( 'watch', function() {
-    gulp.watch( [ 'public/index.js', 'lib/*.js', 'src/*.js' ], [ 'scripts' ]);
-    gulp.watch( [ 'public/*.scss' ], [ 'sass' ]);
+    gulp.watch( [ paths.scripts, 'lib/*.js', 'src/*.js' ], [ 'scripts' ]);
+    gulp.watch( paths.styles, [ 'sass' ]);
 });
 
 gulp.task( 'compile', [ 'scripts', 'sass' ]);

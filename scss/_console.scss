@@ -1,0 +1,16 @@
+#console {
+  z-index: 1001;
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+  white-space: pre-wrap;
+  background: $bg-dark-transparent;
+  color: $text-console;
+  margin: 0;
+  padding: $gutter;
+  font-size: 0.8rem;
+}

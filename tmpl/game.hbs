@@ -1,0 +1,16 @@
+<li class='game' id='{{ id }}'>
+  {{# boxart }}
+    <img src='{{ url }}'>
+  {{/ boxart }}
+  {{^ boxart }}
+    <h3>{{ name }}</h3>
+  {{/ boxart }}
+  <dl class='info'>
+    <dt>Game</dt>
+    <dd>{{ name }}</dd>
+    {{# info }}
+      <dt>{{ key }}</dt>
+      <dd>{{ val }}</dd>
+    {{/ info }}
+  </dl>
+</li>

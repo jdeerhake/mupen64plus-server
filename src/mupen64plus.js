@@ -18,7 +18,7 @@ function Mupen64Plus( config ) {
 Mupen64Plus.prototype = {
   load : function( game ) {
     if( this.process ) { this.end(); }
-    console.log( 'args', this.args( game.file.location ) );
+    var args = this.args( game.file.location );
     this.process = spawn( './mupen64plus', this.args( game.file.location ), execOpts );
     return this.process;
   },

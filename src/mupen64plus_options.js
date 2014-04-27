@@ -1,5 +1,6 @@
 var conf = require( '../config' ),
   defaults = require( '../mupen_defaults' ),
+  path = require( 'path' ),
   _ = require( 'lodash' ),
   fs = require( 'fs' );
 
@@ -9,6 +10,24 @@ var args = [
     type : 'val',
     hidden : true,
     val : './config'
+  },
+  {
+    name : 'datadir',
+    type : 'val',
+    hidden : true,
+    val : './'
+  },
+  {
+    name : 'sshotdir',
+    type : 'val',
+    hidden : true,
+    val : path.resolve( conf.gamesDir, 'screenshots' )
+  },
+  {
+    name : 'plugindir',
+    type : 'val',
+    hidden : true,
+    val : './'
   },
   {
     name : 'fullscreen',
@@ -27,12 +46,12 @@ var args = [
     type : 'switch'
   },
   {
-    name : 'verbose',
-    type : 'switch'
-  },
-  {
     name : 'resolution',
     type : 'val'
+  },
+  {
+    name : 'verbose',
+    type : 'switch'
   },
   {
     name : 'gfx',

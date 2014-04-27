@@ -1,55 +1,63 @@
 var config = require( './config' );
 var _ = require( 'lodash' );
 var Mupen64Plus = require( './src/mupen64plus' );
+var GameList = require( './src/game_list' );
+var GameFinder = require( './src/game_finder' );
 
-var games = [];
-require( './src/load_games' )( config.gamesDir ).then(function( gms ) {
-  console.log( 'Game info downloaded' );
-  games = gms;
+
+var games = new GameList();
+var finder = new GameFinder( config.gamesDir );
+var mupen64plus = new Mupen64Plus( require( './src/mupen64plus_options' ) );
+
+
+finder.on( 'game:found', function( game ) {
+  console.log( 'Added game to the index: ' + game.name() );
+  games.add( game );
 });
+
 
 var server = require( './lib/server' );
 var io = require( 'socket.io' ).listen( server );
 
 
-var mupen = new Mupen64Plus( require( './src/mupen64plus_options' ) );
+io.sockets.on( 'connection', handlers );
 
-function routes( socket ) {
+function handlers( socket ) {
   socket.emit( 'connection', 'connected' );
-  socket.emit( 'game:list', games );
-  socket.emit( 'mupen:opts', mupen.opts );
+  socket.emit( 'game:list', games.all() );
+  socket.emit( 'mupen64plus:opts', mupen64plus.opts );
 
   socket.on( 'game:list', function() {
-    socket.emit( 'game:list', games );
+    socket.emit( 'game:list', games.all() );
   });
 
   socket.on( 'game:load', function( id ) {
-    var game = _.find( games, { id : id });
+    var game = games.find( id );
     if( !game ) {
       socket.emit( 'error', 'Invalid game ID' );
       return;
     }
 
-    var process = mupen.load( game );
+    var process = mupen64plus.load( game );
     io.sockets.emit( 'game:load', game );
-    setBindings( process );
+    setProcessBindings( process );
   });
 
-  socket.on( 'mupen:opts', function( opts ) {
+  socket.on( 'mupen64plus:opts', function( opts ) {
     Object.keys( opts ).map(function( key ) {
       var val = opts[ key ];
-      mupen.opts[ key ].val = val;
-      io.sockets.emit( 'mupen:opts', mupen.opts );
+      mupen64plus.opts[ key ].val = val;
+      io.sockets.emit( 'mupen64plus:opts', mupen64plus.opts );
     });
   });
 
   socket.on( 'game:end', function() {
-    mupen.end();
+    mupen64plus.end();
     io.sockets.emit( 'game:end' );
   });
 }
 
-function setBindings( process ) {
+function setProcessBindings( process ) {
   process.stdout.on( 'data', function( data ) {
     io.sockets.emit( 'console:output', '' + data );
   });
@@ -58,7 +66,3 @@ function setBindings( process ) {
     io.sockets.emit( 'console:output', '' + data );
   });
 }
-
-
-io.sockets.on( 'connection', routes );
-
