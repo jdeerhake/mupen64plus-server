@@ -1,11 +1,18 @@
 {
   "name": "mupen64plus-server",
   "version": "0.0.0",
-  "description": "",
+  "description": "NodeJS front end for mupen64plus",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "git@github.com:jdeerhake/mupen64plus-server.git",
+  "keywords": [
+    "games",
+    "emulation",
+    "mupen64",
+    "mupen64plus"
+  ],
   "author": "John Deerhake <jdeerhake@gmail.com>",
   "license": "MIT",
   "dependencies": {
