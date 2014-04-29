@@ -6,12 +6,6 @@ var Game = require( './game' );
 var gamesdb = require( '../lib/gamesdb' );
 
 
-function isRomFile( filename, extensionRegex ) {
-  return extensionRegex.some(function( reg ) {
-    return !!reg.exec( filename );
-  });
-}
-
 function fileInfo( location ) {
   return {
     name : path.basename( location ),
@@ -20,38 +14,46 @@ function fileInfo( location ) {
   };
 }
 
-function fetchGDBInfo( file ) {
-  return gamesdb.findByName( file.name.slice( 0, -4 ) );
+function fetchGDBInfo( file, platform ) {
+  return gamesdb.findByNameAndPlatform( file.name.slice( 0, -4 ), platform );
 }
 
-function instGame( info ) {
+function instantiateGame( info ) {
   return new Game( info );
 }
 
-function makeGame( file ) {
+function makeGame( file, platform ) {
   console.log( 'Found game file: ' + file.name + '. Downloading info.' );
-
-  return fetchGDBInfo( file )
+  var gameInfo = { file : file, platform: platform };
+  return fetchGDBInfo( file, platform )
     .then(function( gamesDB ) {
-      return { gamesDB : gamesDB, file : file };
+      gameInfo.gamesDB = gamesDB;
+      return gameInfo;
     }, function() {
-      return { file : file };
+      return gameInfo;
     })
-    .then( instGame );
+    .then( instantiateGame );
 }
 
-module.exports = function( dir, extensions ) {
+module.exports = function( dir, exts, platform ) {
   var finder = findit( dir );
   var eventEmitter = new events.EventEmitter();
-  var extensionRegex = extensions.map(function( ext ) {
-    return new RegExp( ext + '$' );
+  var extensionRegex = exts.map(function( ext ) {
+    return new RegExp( '.' + ext + '$' );
   });
+
+  function isRomFile( filename ) {
+    return extensionRegex.some(function( reg ) {
+      return !!reg.exec( filename );
+    });
+  }
+
 
   finder.on( 'file', function( location ) {
     var file = fileInfo( location );
     if( !isRomFile( file.name ) ) { return; }
 
-    makeGame( file ).then(function( game ) {
+    makeGame( file, platform ).then(function( game ) {
       eventEmitter.emit( 'add', game );
     });
 
@@ -61,9 +63,9 @@ module.exports = function( dir, extensions ) {
 
     monitor.on( 'created', function( location ) {
       var file = fileInfo( location );
-      if( !isRomFile( file.name, extensionRegex ) ) { return; }
+      if( !isRomFile( file.name ) ) { return; }
 
-      makeGame( file ).then(function( game ) {
+      makeGame( file, platform ).then(function( game ) {
         eventEmitter.emit( 'add', game );
       });
     });

@@ -1,17 +1,18 @@
 var spawn = require( 'child_process' ).spawn;
 var _ = require( 'lodash' );
-var GameList = require( './game_list' );
-var GameFinder = require( './src/game_finder' );
+var GameList = require( '../game_list' );
+var GameFinder = require( '../game_finder' );
 
 
 var VALID_EXTS = [ 'n64', 'v64', 'z64', 'rom' ];
+var PLATFORM = 'Nintendo 64';
 var CMD = './mupen64plus';
 var NAME = 'mupen64plus';
 
 
-var opts = require( './mupen64plus_options' );
 
 function Mupen64Plus( config, allSockets ) {
+  var opts = require( './mupen64plus_options' )( config );
   var games = new GameList();
   var process = false;
   var loadedGame = false;
@@ -74,7 +75,7 @@ function Mupen64Plus( config, allSockets ) {
     },
     gameLoad : function( gameID ) {
       var game = games.find( gameID );
-      if( loadGame( game ) ) {
+      if( game && loadGame( game ) ) {
         allSockets.emit( 'game:loaded', game );
       }
     },
@@ -98,8 +99,9 @@ function Mupen64Plus( config, allSockets ) {
     socket.on( 'emulator:get_opts', _.partial( handlers.getOpts, socket ) );
   });
 
-  var finder = new GameFinder( config.gamesDir, VALID_EXTS );
+  var finder = new GameFinder( config.gamesDir, VALID_EXTS, PLATFORM );
   finder.on( 'add', function( game ) {
+    console.log( 'Game added for ' + NAME + ': ' + game.name() );
     games.add( game );
     allSockets.emit( 'game:add', games );
   });

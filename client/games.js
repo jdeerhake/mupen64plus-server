@@ -1,5 +1,4 @@
 var $ = require( 'jquery' );
-var _ = require( 'lodash' );
 var Game = require( '../src/game' );
 
 
@@ -15,19 +14,11 @@ function reset() {
   container.html( '' );
 }
 
-
 function initialize( gameData ) {
   var game = new Game( gameData );
   game.el = $( tmpl.game( game ) );
   return game;
 }
-
-
-function append( game) {
-  container.append( game.el );
-  return game;
-}
-
 
 function insertInOrder( game ) {
   container.find( '.game' ).toArray().reverse().some(function( el ) {
@@ -49,13 +40,10 @@ module.exports = function( socket ) {
   socket.emit( 'game:get_list' );
 
   socket.on( 'game:list', function( games ) {
-    reset();
     games
       .map( initialize )
       .sort( sortByName )
-      .map( append );
-
-
+      .map( insertInOrder );
   });
 
   socket.on( 'game:added', function( game ) {

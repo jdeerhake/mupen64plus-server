@@ -1,10 +1,17 @@
 module.exports = {
-  port : 8080,
+  server : {
+    port : 8000
+  },
   emulators : {
     mupen64plus : {
-      enabled : true,
       gamesDir : '/home/jdeerhake/Dropbox/Games/N64',
       binDir : '/opt/mupen64plus/'
+    },
+    snes9x : {
+      gamesDir : '/home/jdeerhake/Dropbox/Games/SNES'
+    },
+    visual_boy_advance : {
+      gamesDir : '/home/jdeerhake/Dropbox/Games/GBA'
     }
   }
 };
