@@ -46,6 +46,7 @@ function sortByName( gameA, gameB ) {
 }
 
 module.exports = function( socket ) {
+  socket.emit( 'game:get_list' );
 
   socket.on( 'game:list', function( games ) {
     reset();
@@ -57,13 +58,13 @@ module.exports = function( socket ) {
 
   });
 
-  socket.on( 'game:add', function( game ) {
+  socket.on( 'game:added', function( game ) {
     [].concat( game )
       .map( initialize )
       .map( insertInOrder );
   });
 
-  socket.on( 'game:remove', function( game ) {
+  socket.on( 'game:removed', function( game ) {
     container.remove( '#' + game.id );
   });
 

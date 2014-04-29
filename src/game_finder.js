@@ -6,9 +6,8 @@ var Game = require( './game' );
 var gamesdb = require( '../lib/gamesdb' );
 
 
-function isRomFile( filename ) {
-  var gameExts = [ /n64$/i, /z64$/i, /v64$/i, /rom$/i ];
-  return gameExts.some(function( reg ) {
+function isRomFile( filename, extensionRegex ) {
+  return extensionRegex.some(function( reg ) {
     return !!reg.exec( filename );
   });
 }
@@ -41,9 +40,12 @@ function makeGame( file ) {
     .then( instGame );
 }
 
-module.exports = function( dir ) {
+module.exports = function( dir, extensions ) {
   var finder = findit( dir );
   var eventEmitter = new events.EventEmitter();
+  var extensionRegex = extensions.map(function( ext ) {
+    return new RegExp( ext + '$' );
+  });
 
   finder.on( 'file', function( location ) {
     var file = fileInfo( location );
@@ -59,7 +61,7 @@ module.exports = function( dir ) {
 
     monitor.on( 'created', function( location ) {
       var file = fileInfo( location );
-      if( !isRomFile( file.name ) ) { return; }
+      if( !isRomFile( file.name, extensionRegex ) ) { return; }
 
       makeGame( file ).then(function( game ) {
         eventEmitter.emit( 'add', game );

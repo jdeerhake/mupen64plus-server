@@ -31,7 +31,8 @@ function createOptions( opts ) {
 
 
 module.exports = function( socket ) {
-  socket.on( 'mupen64plus:opts', createOptions );
+  socket.emit( 'emulator:get_opts' );
+  socket.on( 'emulator:opts', createOptions );
 
 
   $( '#options' ).on( 'change', 'input[type!=checkbox], select', function() {
