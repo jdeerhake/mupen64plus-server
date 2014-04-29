@@ -12,14 +12,14 @@ var mupen64plus = new Mupen64Plus( require( './src/mupen64plus_options' ) );
 finder.on( 'add', function( game ) {
   games.add( game );
   console.log( 'Added game to the index: ' + game.name() );
-  io.sockets.emit( 'game:list', games.all() );
+  io.sockets.emit( 'game:add', games );
 });
 
 finder.on( 'remove', function( file ) {
   var game = games.findByFile( file );
   games.remove( game );
   console.log( 'Removed game from index: ' + game.name() );
-  io.sockets.emit( 'game:list', games.all() );
+  io.sockets.emit( 'game:remove', game );
 });
 
 

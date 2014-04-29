@@ -16,6 +16,7 @@
   position: relative;
   font-size: 0; // LF issues
   transition: opacity 0.3s ease;
+  float: left;
 
   &.faded {
     opacity : 0;

@@ -16,20 +16,27 @@ var msnry = $( window ).width() > 500 ?  new Masonry( container[0], { itemSelect
 
 function reset() {
   container.html( '' );
-  if( msnry ) { msnry.reloadItems(); }
 }
 
-function preloadGame( game ) {
-  game.el = $( tmpl.game( game ) );
 
-  var img = game.el.find( 'img' ).attr( 'src' ),
-    complete = _.partial( loadGame, game );
-  if( img ) {
-    var preload = new Image();
-    preload.src = img;
-    preload.onload = complete;
-  } else {
-    complete();
+function initialize( gameData ) {
+  return new Game( gameData );
+}
+
+function render( game ) {
+  game.el = tmpl.game( game );
+  return game;
+}
+
+function append( game) {
+  container.append( game.el );
+  return game;
+}
+
+function layout() {
+  if( msnry ) {
+    msnry.reloadItems();
+    msnry.layout();
   }
 }
 
@@ -45,22 +52,7 @@ function insertInOrder( game ) {
   }) || container.prepend( game.el );
 }
 
-function loadGame( game ) {
-  if( msnry ) {
-    container.append( game.el );
-    msnry.appended( game.el );
-  }
-
-  insertInOrder( game );
-
-  if( msnry ) {
-    msnry.reloadItems();
-    //msnry.appended( game.el[0] );
-    msnry.layout();
-  }
-}
-
-function byName( gameA, gameB ) {
+function sortByName( gameA, gameB ) {
   return gameA.name() > gameB.name() ? 1 : -1;
 }
 
@@ -69,15 +61,31 @@ module.exports = function( socket ) {
   socket.on( 'game:list', function( games ) {
     reset();
     games
-      .map(function( gm ) { return new Game( gm ); })
-      .sort( byName )
-      .map( preloadGame );
+      .map( initialize )
+      .map( render )
+      .sort( sortByName )
+      .map( append );
+
+
+  });
+
+  socket.on( 'game:add', function( game ) {
+    [].concat( game )
+      .map( initialize )
+      .map( render )
+      .map( insertInOrder );
+  });
+
+  socket.on( 'game:remove', function( game ) {
+    container.remove( '#' + game.id );
+    layout();
   });
 
   $( '#games' )
     .on( 'click', '.game', function() {
       socket.emit( 'game:load', $( this ).attr( 'id' ) );
     })
+
     .on( 'click', '.toggle_info', function() {
       var infoEl = $( this ).siblings( '.info' );
       infoEl.toggle();
