@@ -3,24 +3,30 @@
   padding: 0;
   clear: both;
   width: 100%;
+  -webkit-column-gap: $gutter * 2;
+
+  @include respond-to(tablet) {
+    -webkit-column-count: 2;
+  }
+  @include respond-to(tablet-landscape) {
+    -webkit-column-count: 3;
+  }
+  @include respond-to(desktop-xl) {
+    -webkit-column-count: 4;
+  }
 }
 
 .game {
   list-style-type: none;
-  margin: $gutter;
-  width: 500px;
-  max-width: 100%;
+  margin: $gutter 0;
   background: $bg-light;
   color: $text-dark;
   cursor: pointer;
   position: relative;
   font-size: 0; // LF issues
-  transition: opacity 0.3s ease;
+  width: 100%;
   float: left;
-
-  &.faded {
-    opacity : 0;
-  }
+  clear: both;
 
   img {
     width: 100%;

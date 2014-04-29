@@ -43,9 +43,8 @@ Game.prototype = {
     var art = [].concat( this.gamesDB.Images.boxart );
     var front = _.find( art, { $ : { side : 'front' } } );
     if( !front ) { return false; }
-
     return {
-      url : this._imgURL( front._ ),
+      url : this._imgURL( front.$.width > 1000 ? front.$.thumb : front._ ),
       width : front.$.width,
       height : front.$.height
     };
