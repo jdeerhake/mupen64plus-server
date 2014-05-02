@@ -13,8 +13,7 @@ var tmpl = {
 function createOptions( opts ) {
   var optionsContainer = $( '#options' ).html( '' );
   _.reduce( opts, function( a, conf ) {
-    if( conf.hidden ) { return;
-    }
+    if( conf.hidden ) { return; }
     if( conf.type === 'switch' ) {
       optionsContainer.append( tmpl.optCheck( conf ) );
     } else if( conf.vals ) {
@@ -40,8 +39,8 @@ module.exports = function( socket ) {
       val = $( this ).val(),
       o = {};
 
-    o[ name ] = val;
-    socket.emit( 'mupen64plus:opts', o );
+    o[ name ] = { val : val };
+    socket.emit( 'emulator:opts', o );
   });
 
   $( '#options' ).on( 'change', 'input[type=checkbox]', function() {
@@ -49,7 +48,7 @@ module.exports = function( socket ) {
       val = $( this ).is( ':checked' ),
       o = {};
 
-    o[ name ] = val;
-    socket.emit( 'mupen64plus:opts', o );
+    o[ name ] = { val : val };
+    socket.emit( 'emulator:opts', o );
   });
 };

@@ -1,8 +1,8 @@
 module.exports = {
   fullscreen : true,
   windowed : false,
-  resolution : '1024x768',
-  osd : false,
-  noosd : true,
+  resolution : '1600x900',
+  osd : true,
+  noosd : false,
   verbose : false
 };

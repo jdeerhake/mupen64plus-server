@@ -1,7 +1,15 @@
 var $ = require( 'jquery' );
 
 module.exports = function( socket ) {
-  socket.on( 'console:output', function( val ) {
+  socket.on( 'emulator:stderr', function( val ) {
+    $( '#console' ).append( val + '\n' );
+  });
+
+  socket.on( 'emulator:stdout', function( val ) {
+    $( '#console' ).append( val + '\n' );
+  });
+
+  socket.on( 'emulator:exit', function( val ) {
     $( '#console' ).append( val + '\n' );
   });
 

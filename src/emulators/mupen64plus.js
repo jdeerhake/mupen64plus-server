@@ -10,7 +10,6 @@ var CMD = './mupen64plus';
 var NAME = 'mupen64plus';
 
 
-
 function Mupen64Plus( config, allSockets ) {
   var opts = require( './mupen64plus_options' )( config );
   var games = new GameList();
@@ -20,8 +19,9 @@ function Mupen64Plus( config, allSockets ) {
   var execOpts = {
     cwd : config.binDir,
     env : _.extend({
-      DISPLAY : ':0'
-    }, process.ENV )
+      DISPLAY : ':0',
+      HOME : '/opt/mupen64plus'
+    }, process.env )
   };
 
   function args( file ) {
@@ -89,6 +89,10 @@ function Mupen64Plus( config, allSockets ) {
       if( emuName === NAME ) {
         socket.emit( 'emulator:opts', opts );
       }
+    },
+    updateOpts : function( obj ) {
+      console.log( obj );
+      _.merge( opts, obj );
     }
   };
 
@@ -97,6 +101,7 @@ function Mupen64Plus( config, allSockets ) {
     socket.on( 'game:load', handlers.gameLoad );
     socket.on( 'game:end', handlers.gameEnd );
     socket.on( 'emulator:get_opts', _.partial( handlers.getOpts, socket ) );
+    socket.on( 'emulator:opts', handlers.updateOpts );
   });
 
   var finder = new GameFinder( config.gamesDir, VALID_EXTS, PLATFORM );
