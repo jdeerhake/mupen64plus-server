@@ -1,5 +1,5 @@
 {
-  "name": "NGLr",
+  "name": "tenlr",
   "version": "0.0.0",
   "description": "NodeJS front end for game emulators",
   "main": "index.js",
