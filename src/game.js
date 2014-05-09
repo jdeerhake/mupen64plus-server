@@ -1,11 +1,14 @@
-var _ = require( 'lodash' );
+var _ = require( 'lodash' ),
+  uuid = require( 'node-uuid' );
 
 
 function Game( conf ) {
   _.merge( this, conf );
   // shorthand for plucking
   this.fileLocation = this.file.location;
-  this.id = _.uniqueId( 'game_' );
+  if( !this.id ) {
+    this.id = 'game-' + uuid.v4();
+  }
 }
 
 Game.prototype = {

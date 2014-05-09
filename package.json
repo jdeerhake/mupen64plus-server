@@ -1,7 +1,7 @@
 {
-  "name": "mupen64plus-server",
+  "name": "NGLr",
   "version": "0.0.0",
-  "description": "NodeJS front end for mupen64plus",
+  "description": "NodeJS front end for game emulators",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,9 @@
   "keywords": [
     "games",
     "emulation",
-    "mupen64",
-    "mupen64plus"
+    "snex9x",
+    "mupen64plus",
+    "fceux"
   ],
   "author": "John Deerhake <jdeerhake@gmail.com>",
   "license": "MIT",
@@ -30,6 +31,8 @@
     "gulp-plumber": "~0.6.1",
     "jquery": "~2.1.0",
     "gulp-sass": "~0.7.1",
-    "watch": "~0.10.0"
+    "watch": "~0.10.0",
+    "node-uuid": "~1.4.1",
+    "require-all": "0.0.8"
   }
 }

@@ -3,7 +3,7 @@ var Game = require( '../src/game' );
 var hbs = require( 'handlebars' );
 
 var tmpl = {
-  gameStatus : hbs.compile( '<em>Now playing:</em> <span title="{{ file.name }}">{{ name }}</span>' ),
+  gameStatus : hbs.compile( '<em>Now playing:</em> <span title="{{ file.name }}">{{ name }} ({{ platform.shortName }})</span>' ),
   noGame : hbs.compile( '<em>No game loaded</em>' )
 };
 
@@ -16,12 +16,12 @@ $( '#console_toggle' ).click(function() {
 });
 
 module.exports = function( socket ) {
-  socket.on( 'game:load', function( gm ) {
+  socket.on( 'game:loaded', function( gm ) {
     var game = new Game( gm );
     $( '#status' ).html( tmpl.gameStatus( game ) );
   });
 
-  socket.on( 'game:end', function() {
+  socket.on( 'game:ended', function() {
     $( '#status' ).html( tmpl.noGame() );
   });
 

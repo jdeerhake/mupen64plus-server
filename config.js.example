@@ -3,15 +3,21 @@ module.exports = {
     port : 8000
   },
   emulators : {
+    fceux : {
+      games : '/home/jdeerhake/Dropbox/Games/NES',
+      binDir : '/opt/fceux/'
+    },
     mupen64plus : {
-      gamesDir : '/home/jdeerhake/Dropbox/Games/N64',
+      games : '/home/jdeerhake/Dropbox/Games/N64',
       binDir : '/opt/mupen64plus/'
     },
     snes9x : {
-      gamesDir : '/home/jdeerhake/Dropbox/Games/SNES'
+      games : '/home/jdeerhake/Dropbox/Games/SNES',
+      binDir : '/opt/snes9x/'
     },
-    visual_boy_advance : {
-      gamesDir : '/home/jdeerhake/Dropbox/Games/GBA'
+    vbam : {
+      games : '/home/jdeerhake/Dropbox/Games/GBA',
+      binDir : '/opt/vba-m/'
     }
   }
 };
