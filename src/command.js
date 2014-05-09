@@ -42,7 +42,10 @@ Command.prototype = {
     };
   },
   kill : function() {
-    this.process && this.process.kill();
+    var proc = this.process;
+    if( proc ) {
+      proc.kill( 'SIGKILL' );
+    }
     this.process = false;
   },
   execute : function( arg ) {
