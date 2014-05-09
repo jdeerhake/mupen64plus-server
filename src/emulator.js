@@ -71,7 +71,7 @@ function Emulator( config, allSockets ) {
     console.log( 'Game added for ' + config.name + ': ' + game.name() );
     game.platform = config.platform;
     games.add( game );
-    allSockets.emit( 'game:added', games );
+    allSockets.emit( 'game:added', game );
   });
 
   finder.on( 'remove', function( file ) {
