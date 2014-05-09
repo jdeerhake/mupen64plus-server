@@ -1,4 +1,5 @@
 var $ = require( 'jquery' );
+var _ = require( 'lodash' );
 var Game = require( '../src/game' );
 var hbs = require( 'handlebars' );
 
@@ -15,6 +16,34 @@ $( '#console_toggle' ).click(function() {
   $( '#console' ).toggle();
 });
 
+$( '#platform_selector' ).on( 'change', function() {
+  filterByPlatform( $( this ).val() );
+});
+
+
+
+function updatePlatformOptions() {
+  var platforms = _.uniq( $( '.game' ).map(function() {
+      return $( this ).data( 'platform' );
+    }).toArray() ).sort(),
+    selector = $( '#platform_selector' );
+
+  platforms.forEach(function( platform ) {
+    if( !selector.find( '[value=\'' + platform + '\']' ).length ) {
+      $( '<option>', { value : platform } ).text( platform ).appendTo( selector );
+    }
+  });
+}
+
+function filterByPlatform( platform ) {
+  if( !platform ) {
+    $( '.game' ).show();
+  } else {
+    $( '.game' ).hide();
+    $( '.game[data-platform=\'' + platform + '\'' ).show();
+  }
+}
+
 module.exports = function( socket ) {
   socket.on( 'game:loaded', function( gm ) {
     var game = new Game( gm );
@@ -23,6 +52,14 @@ module.exports = function( socket ) {
 
   socket.on( 'game:ended', function() {
     $( '#status' ).html( tmpl.noGame() );
+  });
+
+  socket.on( 'game:list', function() {
+    setTimeout( updatePlatformOptions, 500 );
+  });
+
+  socket.on( 'game:added', function() {
+    setTimeout( updatePlatformOptions, 500 );
   });
 
   $( '#end_game' ).click(function() {

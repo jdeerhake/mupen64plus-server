@@ -46,4 +46,15 @@
       font-style: normal;
     }
   }
+
+  #platform_selector {
+    padding: $item-padding;
+    float: right;
+    min-width: 100px;
+    font-size: $font-size;
+
+    option {
+      padding: $item-padding;
+    }
+  }
 }
