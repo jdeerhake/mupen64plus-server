@@ -29,8 +29,11 @@ function Emulator( config, allSockets ) {
   });
 
   function loadGame( game ) {
+    var arg = [];
+    if( config.gameSwitch ) { arg.push( '--' + config.gameSwitch ); }
+    arg.push( game.file.location );
     loadedGame = game;
-    command.execute( game.file.location );
+    command.execute( arg );
     log( 'cmd', command.getFullCmd( game.file.location ) );
     return true;
   }
