@@ -1,8 +1,7 @@
 module.exports =  {
   platform : require( '../platforms' ).n64,
   romExts : [ 'n64', 'v64', 'z64', 'rom' ],
-  binDir : '/opt/mupen64plus/',
-  cmd : './mupen64plus',
+  cmd : '/opt/mupen64plus/mupen64plus',
   switches : {
     'configdir' : './config',
     'datadir' : './data',
@@ -10,6 +9,6 @@ module.exports =  {
   },
   env : {
     DISPLAY : ':0',
-    HOME : '/opt/mupen64plus/'
+    HOME : '/opt/tenlr/'
   }
 };

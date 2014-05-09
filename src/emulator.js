@@ -8,7 +8,6 @@ function Emulator( config, allSockets ) {
   var games = new GameList();
   var loadedGame = false;
   var command = new Command({
-    cwd : config.binDir,
     env : _.extend( {}, process.env, config.env ),
     switches : config.switches,
     cmd : config.cmd

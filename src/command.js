@@ -19,7 +19,7 @@ function subscribe( process, emitter ) {
 
 function Command( config ) {
   this._env = config.env || process.env;
-  this._cwd = config.cwd || __dirname;
+  this._cwd = config.cwd || this._env.HOME;
   this._cmd = config.cmd;
   this._switches = config.switches;
   this.events = new EventEmitter();
