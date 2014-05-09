@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "git@github.com:jdeerhake/mupen64plus-server.git",
+  "repository": "git@github.com:jdeerhake/tenlr.git",
   "keywords": [
     "games",
     "emulation",
