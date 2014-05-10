@@ -4,20 +4,22 @@ module.exports = {
   },
   emulators : {
     fceux : {
-      games : '/home/jdeerhake/Dropbox/Games/NES',
-      binDir : '/opt/fceux/'
+      gamesDir : ''
     },
     mupen64plus : {
-      games : '/home/jdeerhake/Dropbox/Games/N64',
-      binDir : '/opt/mupen64plus/'
+      gamesDir : ''
     },
     snes9x : {
-      games : '/home/jdeerhake/Dropbox/Games/SNES',
-      binDir : '/opt/snes9x/'
+      gamesDir : ''
     },
     vbam : {
-      games : '/home/jdeerhake/Dropbox/Games/GBA',
-      binDir : '/opt/vba-m/'
+      gamesDir : ''
+    },
+    dolphin_ngc : {
+      gamesDir : ''
+    },
+    dolphin_wii : {
+      gamesDir : ''
     }
   }
 };

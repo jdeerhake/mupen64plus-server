@@ -3,9 +3,9 @@ module.exports =  {
   romExts : [ 'n64', 'v64', 'z64', 'rom' ],
   cmd : '/opt/mupen64plus/mupen64plus',
   switches : {
-    'configdir' : './config',
-    'datadir' : './data',
-    'sshotdir' : './screenshots'
+    'configdir' : '/opt/.mupen64plus/config',
+    'datadir' : '/opt/.mupen64plus/data',
+    'sshotdir' : '/opt/.mupen64plus/sshots'
   },
   env : {
     DISPLAY : ':0',

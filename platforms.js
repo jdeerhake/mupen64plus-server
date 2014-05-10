@@ -24,10 +24,16 @@ module.exports = {
     gamesDB : 'Nintendo Game Boy Advance'
   },
 
-  gcm : {
+  ngc : {
     shortName : 'GameCube',
     longName : 'GameCube',
     gamesDB : 'Nintendo GameCube'
+  },
+
+  wii : {
+    shortName : 'Wii',
+    longName : 'Nintendo Wii',
+    gamesDB : 'Nintendo Wii'
   }
 
 };

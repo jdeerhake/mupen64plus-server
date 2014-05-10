@@ -1,6 +1,6 @@
 module.exports =  {
-  platform : require( '../platforms' ).gcm,
-  romExts : [ 'gcm', 'iso' ],
+  platform : require( '../platforms' ).wii,
+  romExts : [ 'iso' ],
   cmd : 'dolphin-emu',
   switches : {},
   gameSwitch : 'exec',
