@@ -39,7 +39,7 @@ module.exports = function( dir, exts, platform ) {
   var finder = findit( dir );
   var eventEmitter = new events.EventEmitter();
   var extensionRegex = exts.map(function( ext ) {
-    return new RegExp( '.' + ext + '$' );
+    return new RegExp( '.' + ext + '$', 'i' );
   });
 
   function isRomFile( filename ) {

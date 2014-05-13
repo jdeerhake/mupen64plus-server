@@ -1,6 +1,6 @@
 module.exports =  {
   platform : require( '../platforms' ).wii,
-  romExts : [ 'iso' ],
+  romExts : [ 'iso', 'wbfs' ],
   cmd : 'dolphin-emu',
   switches : {},
   gameSwitch : 'exec',

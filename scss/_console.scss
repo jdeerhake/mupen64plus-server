@@ -1,4 +1,6 @@
 #console {
+  user-select: default;
+  -webkit-user-select: default;
   z-index: 1001;
   display: none;
   position: fixed;

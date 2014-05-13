@@ -27,7 +27,11 @@ Game.prototype = {
     }).bind( this )).filter( Boolean );
   },
   genre : function() {
-    return [].concat( this.gamesDB.Genres.genre ).join( ', ' );
+    try {
+      return [].concat( this.gamesDB.Genres.genre ).join( ', ' );
+    } catch(e) {
+      return '';
+    }
   },
   rating : function() {
     return Math.round( this.gamesDB.Rating * 10 ) / 10;

@@ -58,6 +58,7 @@ module.exports = function( socket ) {
 
   $( '#games' )
     .on( 'click', '.game', function() {
+      socket.emit( 'game:end' );
       socket.emit( 'game:load', $( this ).attr( 'id' ) );
     })
 

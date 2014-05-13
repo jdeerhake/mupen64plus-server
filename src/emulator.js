@@ -59,6 +59,11 @@ function Emulator( config, allSockets ) {
       if( !loadedGame ) { return false; }
       allSockets.emit( 'game:ended', loadedGame );
       endGame();
+    },
+    status : function( socket ) {
+      if( loadedGame ) {
+        socket.emit( 'game:loaded', loadedGame );
+      }
     }
   };
 
@@ -66,6 +71,7 @@ function Emulator( config, allSockets ) {
     socket.on( 'game:get_list', _.partial( handlers.gameList, socket ) );
     socket.on( 'game:load', handlers.gameLoad );
     socket.on( 'game:end', handlers.gameEnd );
+    socket.on( 'emulator:get_status', _.partial( handlers.status, socket ) );
   });
 
   var finder = new GameFinder( config.gamesDir, config.romExts, config.platform.gamesDB );

@@ -45,6 +45,8 @@ function filterByPlatform( platform ) {
 }
 
 module.exports = function( socket ) {
+  socket.emit( 'emulator:get_status' );
+
   socket.on( 'game:loaded', function( gm ) {
     var game = new Game( gm );
     $( '#status' ).html( tmpl.gameStatus( game ) );
